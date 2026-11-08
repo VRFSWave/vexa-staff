@@ -7,35 +7,32 @@
       "username": "admin",
       "name": "Administrator",
       "role": "admin",
-      "password": "change-this-admin-password"
+      "password": "change-this-admin-password",
+      "pages": ["main", "live-tv"]
     },
     {
       "username": "alice",
       "name": "Alice",
       "role": "user",
       "password": "alice-pw",
-      "access": {
-        "sports": ["Football", "Basketball"]
-      }
+      "pages": ["main"],
+      "access": { "all": true }
     },
     {
       "username": "bob",
       "name": "Bob",
       "role": "user",
       "password": "bob-pw",
-      "access": {
-        "all": true
-      }
+      "pages": ["main", "live-tv"],
+      "access": { "all": true }
     },
     {
       "username": "carol",
       "name": "Carol",
       "role": "user",
       "password": "carol-pw",
-      "access": {
-        "eventIds": ["12345", "67890"],
-        "leagues": ["Premier League"]
-      }
+      "pages": ["main"],
+      "access": { "sports": ["Football", "Basketball"] }
     }
   ]
 }
