@@ -1,0 +1,18 @@
+{
+  "sessionHours": 12,
+  "maxAttempts": 5,
+  "lockoutMinutes": 5,
+  "users": [
+    {
+      "username": "alice",
+      "name": "Alice",
+      "password": "change-this-password"
+    },
+    {
+      "username": "bob",
+      "name": "Bob",
+      "salt": "a1b2c3d4e5f6",
+      "hash": "REPLACE_WITH_GENERATED_HASH"
+    }
+  ]
+}
