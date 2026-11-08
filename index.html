@@ -3,8 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LiveSport — Free Live Sports Streams</title>
-<meta name="description" content="Browse live and upcoming sports events and watch them in a full-screen player.">
+<title>LiveSport — Live Sports</title>
 <meta name="robots" content="noindex, nofollow">
 <style>
   :root{
@@ -30,125 +29,55 @@
   button{font:inherit}
   .wrap{max-width:var(--wrap);margin:0 auto;padding:0 20px}
 
-  /* ---------- Login gate ---------- */
-  .gate{
-    position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:24px;
-    background:
-      radial-gradient(1200px 600px at 85% -10%, #0d2b33 0%, transparent 60%),
-      radial-gradient(900px 500px at 0% 0%, #1a1430 0%, transparent 55%),
-      var(--bg);
-  }
-  .gate[hidden]{display:none}
-  .gate-card{
-    width:min(400px,100%);
-    background:var(--panel);border:1px solid var(--line);border-radius:20px;
-    padding:30px 28px 26px;
-    box-shadow:0 40px 90px -40px #000, inset 0 0 0 1px rgba(255,255,255,.02);
-    animation:pop .22s ease;
-  }
-  .gate-brand{
-    display:flex;align-items:center;gap:10px;
-    font-weight:800;font-size:17px;letter-spacing:-.02em;margin-bottom:22px;
-  }
-  .gate-brand b{color:var(--accent)}
-  .gate-brand::before{
-    content:"▶";display:grid;place-items:center;width:28px;height:28px;border-radius:9px;
-    font-size:11px;color:#04121a;
-    background:linear-gradient(135deg,var(--accent),var(--accent-2));
-    box-shadow:0 6px 18px -6px var(--accent);
-  }
-  .gate-card h1{margin:0 0 6px;font-size:20px;letter-spacing:-.02em}
-  .gate-sub{margin:0 0 22px;font-size:13px;color:var(--muted);line-height:1.55}
-  .field{display:block;margin-bottom:14px}
-  .field span{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px;letter-spacing:.02em}
-  .field input{
-    width:100%;padding:11px 14px;border-radius:11px;
-    border:1px solid var(--line-2);background:var(--panel-2);color:var(--text);
-    font-size:14px;outline:none;transition:.16s;
-  }
-  .field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(34,211,238,.13)}
-  .remember{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--muted);cursor:pointer;user-select:none;margin:2px 0 20px}
-  .remember input{accent-color:var(--accent);width:15px;height:15px}
-  .gate-btn{
-    width:100%;padding:12px;border:0;border-radius:11px;cursor:pointer;
-    font-size:14px;font-weight:800;color:#04121a;
-    background:linear-gradient(135deg,var(--accent),var(--accent-2));
-    transition:.15s;
-  }
-  .gate-btn:hover{filter:brightness(1.1)}
-  .gate-btn:disabled{opacity:.6;cursor:progress;filter:none}
-  .gate-msg{margin-top:14px;font-size:12.5px;line-height:1.5;color:#ff8098;min-height:1em}
-  .gate-msg.ok{color:#5eead4}
-  .gate-foot{margin-top:16px;font-size:11px;color:#4f6076;text-align:center;line-height:1.6}
-
-  /* ---------- Header ---------- */
+  /* Header (shared) */
   .site-header{
     position:sticky;top:0;z-index:50;
     background:rgba(7,10,15,.82);
     backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
     border-bottom:1px solid var(--line);
   }
-  .bar-top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
-  .brand{
-    display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);
-    font-weight:800;font-size:19px;letter-spacing:-.02em;
-  }
+  .bar-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:800;font-size:19px;letter-spacing:-.02em}
   .brand b{color:var(--accent)}
   .brand .mark{
     display:grid;place-items:center;width:32px;height:32px;border-radius:10px;
-    font-size:13px;color:#04121a;
-    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    font-size:13px;color:#04121a;background:linear-gradient(135deg,var(--accent),var(--accent-2));
     box-shadow:0 6px 20px -6px var(--accent);
   }
-  .search{position:relative;flex:1 1 280px;min-width:200px}
-  .search svg{
-    position:absolute;left:14px;top:50%;transform:translateY(-50%);
-    width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:2;pointer-events:none;
-  }
-  .search input{
-    width:100%;padding:11px 16px 11px 40px;border-radius:999px;
-    border:1px solid var(--line);background:var(--panel);color:var(--text);
-    font-size:14px;outline:none;transition:.16s;
-  }
-  .search input::placeholder{color:#62748c}
-  .search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(34,211,238,.12);background:var(--panel-2)}
-  .switch{
-    display:inline-flex;align-items:center;gap:9px;
-    font-size:13px;font-weight:600;color:var(--muted);
-    cursor:pointer;user-select:none;white-space:nowrap;
-  }
-  .switch input{position:absolute;opacity:0;pointer-events:none}
-  .switch .track{
-    width:38px;height:22px;border-radius:999px;
-    background:var(--panel-2);border:1px solid var(--line-2);
-    position:relative;transition:.18s;flex:none;
-  }
-  .switch .track::after{
-    content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;
-    border-radius:50%;background:var(--muted);transition:.18s;
-  }
-  .switch input:checked + .track{background:rgba(255,45,85,.22);border-color:var(--live)}
-  .switch input:checked + .track::after{transform:translateX(16px);background:var(--live)}
-  .switch input:checked ~ .switch-label{color:var(--text)}
-
+  .nav{display:flex;gap:4px;flex:1}
+  .nav a{padding:8px 14px;border-radius:999px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;transition:.15s}
+  .nav a:hover{color:var(--text);background:rgba(255,255,255,.05)}
+  .nav a.active{color:#04121a;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+  .user-bar{display:flex;align-items:center;gap:10px}
+  .who{font-size:12.5px;color:var(--muted)}
+  .who strong{color:var(--text);font-weight:700}
   .signout{
     display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:999px;cursor:pointer;
     border:1px solid var(--line);background:var(--panel);color:var(--muted);
     font-size:12.5px;font-weight:700;transition:.15s;white-space:nowrap;
   }
   .signout:hover{color:var(--text);border-color:var(--live);background:rgba(255,45,85,.12)}
-  .signout svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .signout.admin:hover{border-color:var(--accent);color:var(--accent);background:rgba(34,211,238,.1)}
+  .signout svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  /* Page-specific */
+  .search{position:relative;flex:1 1 280px;min-width:200px}
+  .search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:2;pointer-events:none}
+  .search input{width:100%;padding:11px 16px 11px 40px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:14px;outline:none;transition:.16s}
+  .search input::placeholder{color:#62748c}
+  .search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(34,211,238,.12);background:var(--panel-2)}
+  .switch{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:var(--muted);cursor:pointer;user-select:none;white-space:nowrap}
+  .switch input{position:absolute;opacity:0;pointer-events:none}
+  .switch .track{width:38px;height:22px;border-radius:999px;background:var(--panel-2);border:1px solid var(--line-2);position:relative;transition:.18s;flex:none}
+  .switch .track::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--muted);transition:.18s}
+  .switch input:checked + .track{background:rgba(255,45,85,.22);border-color:var(--live)}
+  .switch input:checked + .track::after{transform:translateX(16px);background:var(--live)}
+  .switch input:checked ~ .switch-label{color:var(--text)}
 
   .bar-chips{padding-bottom:11px}
   .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
   .chips::-webkit-scrollbar{display:none}
-  .chip{
-    white-space:nowrap;padding:8px 14px;border-radius:999px;
-    border:1px solid var(--line);background:var(--panel);color:var(--muted);
-    cursor:pointer;font-size:13px;font-weight:600;transition:.15s;
-    display:inline-flex;align-items:center;gap:7px;
-  }
+  .chip{white-space:nowrap;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer;font-size:13px;font-weight:600;transition:.15s;display:inline-flex;align-items:center;gap:7px}
   .chip:hover{color:var(--text);border-color:var(--line-2)}
   .chip .n{font-size:11px;font-weight:700;color:#6b7f96;background:rgba(255,255,255,.05);padding:1px 6px;border-radius:999px}
   .chip.active{background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#04121a;border-color:transparent}
@@ -156,22 +85,14 @@
 
   .statusline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:22px 0 16px;font-size:13px;color:var(--muted)}
   .statusline strong{color:var(--text);font-weight:700}
-  .live-pill{
-    display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;
-    font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
-    background:rgba(255,45,85,.14);color:#ff6b87;border:1px solid rgba(255,45,85,.3);
-  }
+  .live-pill{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:rgba(255,45,85,.14);color:#ff6b87;border:1px solid rgba(255,45,85,.3)}
   .live-pill .d{width:6px;height:6px;border-radius:50%;background:var(--live);animation:pulse 1.4s infinite}
   .dot-sep{width:3px;height:3px;border-radius:50%;background:var(--line-2)}
   @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.75)}}
   @keyframes pop{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
 
   .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));padding-bottom:70px}
-  .card{
-    display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);
-    border-radius:var(--radius);overflow:hidden;cursor:pointer;text-align:left;
-    transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease;
-  }
+  .card{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;cursor:pointer;text-align:left;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
   .card:hover{transform:translateY(-4px);border-color:#2f4257;box-shadow:0 22px 45px -24px rgba(0,0,0,.95)}
   .card:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,#111b27,#0a1017)}
@@ -180,27 +101,14 @@
   .fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:16px}
   .fallback .logo{width:52px;height:52px;object-fit:contain;filter:drop-shadow(0 6px 14px rgba(0,0,0,.65))}
   .fallback .vs{font-size:11px;font-weight:800;letter-spacing:.14em;color:#5b6d84}
-  .badge{
-    position:absolute;top:10px;left:10px;display:inline-flex;align-items:center;gap:6px;
-    padding:5px 10px;border-radius:999px;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
-    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-  }
+  .badge{position:absolute;top:10px;left:10px;display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
   .badge.live{background:rgba(255,45,85,.92);color:#fff;box-shadow:0 4px 14px -4px rgba(255,45,85,.8)}
   .badge.live .d{width:6px;height:6px;border-radius:50%;background:#fff;animation:pulse 1.4s infinite}
   .badge.ns{background:rgba(8,13,20,.78);color:#cfe3f5;border:1px solid rgba(255,255,255,.13)}
   .badge.ft{background:rgba(8,13,20,.78);color:#93a6bd;border:1px solid rgba(255,255,255,.1)}
-  .sport-tag{
-    position:absolute;top:10px;right:10px;padding:5px 10px;border-radius:999px;
-    font-size:10.5px;font-weight:700;letter-spacing:.04em;
-    background:rgba(8,13,20,.75);color:#b8cfe6;border:1px solid rgba(255,255,255,.1);
-    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-    max-width:52%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-  }
+  .sport-tag{position:absolute;top:10px;right:10px;padding:5px 10px;border-radius:999px;font-size:10.5px;font-weight:700;letter-spacing:.04em;background:rgba(8,13,20,.75);color:#b8cfe6;border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);max-width:52%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .card-body{display:flex;flex-direction:column;gap:7px;flex:1;padding:13px 15px 14px}
-  .card-title{
-    margin:0;font-size:14.5px;font-weight:700;line-height:1.35;
-    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-  }
+  .card-title{margin:0;font-size:14.5px;font-weight:700;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .card-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
   .card-meta .sep{width:3px;height:3px;border-radius:50%;background:var(--line-2)}
   .card-meta .ell{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:170px}
@@ -208,11 +116,7 @@
   .card-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:9px}
   .kick{font-size:11.5px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
   .kick svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2}
-  .watch{
-    display:inline-flex;align-items:center;gap:6px;border:0;border-radius:10px;padding:8px 13px;
-    font-size:12px;font-weight:800;cursor:pointer;
-    background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#04121a;transition:.15s;flex:none;
-  }
+  .watch{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:10px;padding:8px 13px;font-size:12px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#04121a;transition:.15s;flex:none}
   .watch:hover{filter:brightness(1.12);transform:translateY(-1px)}
   .watch svg{width:11px;height:11px;fill:currentColor}
 
@@ -223,104 +127,61 @@
   .skel .s-line.w40{width:40%;margin-bottom:16px}
   @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-  .state{
-    grid-column:1/-1;padding:70px 20px;text-align:center;
-    border:1px dashed var(--line-2);border-radius:18px;background:rgba(15,21,31,.5);
-  }
+  .state{grid-column:1/-1;padding:70px 20px;text-align:center;border:1px dashed var(--line-2);border-radius:18px;background:rgba(15,21,31,.5)}
   .state .em{font-size:34px;margin-bottom:10px;opacity:.85}
   .state h3{margin:0 0 8px;font-size:17px}
   .state p{margin:0 auto;max-width:420px;color:var(--muted);font-size:13.5px;line-height:1.6}
-  .btn{
-    margin-top:16px;border:1px solid var(--line-2);background:var(--panel-2);
-    color:var(--text);padding:10px 18px;border-radius:10px;
-    font-size:13px;font-weight:700;cursor:pointer;transition:.15s;
-  }
+  .btn{margin-top:16px;border:1px solid var(--line-2);background:var(--panel-2);color:var(--text);padding:10px 18px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
   .btn:hover{border-color:var(--accent);color:var(--accent)}
   .btn-primary{border-color:transparent;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#04121a;margin-top:0}
   .btn-primary:hover{filter:brightness(1.1);color:#04121a}
 
-  .modal{
-    position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:18px;
-    background:rgba(3,6,10,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  }
+  .modal{position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(3,6,10,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
   .modal.open{display:flex}
-  .modal-box{
-    width:min(1100px,100%);max-height:calc(100vh - 36px);display:flex;flex-direction:column;
-    background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;
-    box-shadow:0 50px 110px -35px #000;animation:pop .2s ease;
-  }
+  .modal-box{width:min(1100px,100%);max-height:calc(100vh - 36px);display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 50px 110px -35px #000;animation:pop .2s ease}
   .modal-head{display:flex;align-items:center;gap:14px;padding:13px 16px;border-bottom:1px solid var(--line);flex:none}
   .modal-head .t{min-width:0;flex:1}
   .modal-head h2{margin:0;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .modal-head .m{margin-top:3px;font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .icon-btn{
-    flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;cursor:pointer;
-    border:1px solid var(--line-2);background:var(--panel-2);color:var(--muted);transition:.15s;
-  }
+  .icon-btn{flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;cursor:pointer;border:1px solid var(--line-2);background:var(--panel-2);color:var(--muted);transition:.15s}
   .icon-btn:hover{color:var(--text);border-color:var(--live);background:rgba(255,45,85,.12)}
   .icon-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
   .icon-btn:disabled{opacity:.35;cursor:not-allowed}
   .player-wrap{position:relative;aspect-ratio:16/9;background:#000;flex:none}
   .player-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-  .modal-foot{
-    display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
-    padding:12px 16px;font-size:11.5px;color:var(--muted);border-top:1px solid var(--line);
-  }
+  .modal-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px 16px;font-size:11.5px;color:var(--muted);border-top:1px solid var(--line)}
   .modal-foot a{color:var(--accent);text-decoration:none;font-weight:600}
   .modal-foot a:hover{text-decoration:underline}
 
-  /* ---------- Admin panel ---------- */
+  /* Admin panel */
   .admin-box{width:min(1200px,100%)}
   .admin-body{display:grid;grid-template-columns:280px 1fr;flex:1;min-height:0;overflow:hidden}
   .admin-users{border-right:1px solid var(--line);overflow-y:auto;padding:10px}
-  .admin-user{
-    padding:11px 12px;border-radius:10px;cursor:pointer;margin-bottom:4px;
-    border:1px solid transparent;transition:.15s;
-  }
+  .admin-user{padding:11px 12px;border-radius:10px;cursor:pointer;margin-bottom:4px;border:1px solid transparent;transition:.15s}
   .admin-user:hover{background:var(--panel-2)}
   .admin-user.selected{background:var(--panel-2);border-color:var(--accent)}
   .au-name{font-size:13.5px;font-weight:700;color:var(--text);margin-bottom:3px}
   .au-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--muted);flex-wrap:wrap}
-  .au-role{
-    padding:1px 7px;border-radius:999px;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.04em;
-    background:rgba(255,255,255,.06);color:var(--muted);
-  }
+  .au-role{padding:1px 7px;border-radius:999px;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.04em;background:rgba(255,255,255,.06);color:var(--muted)}
   .au-role.role-admin{background:rgba(34,211,238,.15);color:var(--accent)}
-  .au-count{color:#6b7f96}
-
   .admin-editor{overflow-y:auto;padding:18px 22px}
   .admin-editor h3{margin:0 0 4px;font-size:15px}
   .admin-editor .username-sub{font-size:12px;color:var(--muted);margin-bottom:16px;display:block}
   .admin-field{display:block;margin-bottom:14px}
   .admin-field > span{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px}
   .admin-field select,
-  .admin-field input[type=text]{
-    width:100%;padding:9px 12px;border-radius:9px;
-    border:1px solid var(--line-2);background:var(--panel-2);color:var(--text);
-    font-size:13px;outline:none;
-  }
+  .admin-field input[type=text]{width:100%;padding:9px 12px;border-radius:9px;border:1px solid var(--line-2);background:var(--panel-2);color:var(--text);font-size:13px;outline:none}
   .admin-field select:focus,
   .admin-field input[type=text]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(34,211,238,.13)}
-  .admin-check{
-    display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--text);
-    margin-bottom:16px;cursor:pointer;user-select:none;
-  }
+  .admin-check{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--text);margin-bottom:10px;cursor:pointer;user-select:none}
   .admin-check input{accent-color:var(--accent);width:15px;height:15px;margin-top:2px;flex:none}
-  .admin-fieldset{
-    border:1px solid var(--line);border-radius:11px;padding:11px 13px 13px;margin:0 0 14px;
-  }
-  .admin-fieldset legend{
-    padding:0 6px;font-size:11.5px;font-weight:700;color:var(--muted);
-    text-transform:uppercase;letter-spacing:.05em;
-  }
-  .admin-fieldset input{width:100%;padding:9px 12px;border-radius:9px;border:1px solid var(--line-2);background:var(--panel-2);color:var(--text);font-size:13px;outline:none}
-  .admin-fieldset input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(34,211,238,.13)}
+  .admin-check.disabled{opacity:.5;cursor:not-allowed}
+  .admin-fieldset{border:1px solid var(--line);border-radius:11px;padding:11px 13px 13px;margin:0 0 14px}
+  .admin-fieldset legend{padding:0 6px;font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+  .admin-fieldset input[type=text]{width:100%;padding:9px 12px;border-radius:9px;border:1px solid var(--line-2);background:var(--panel-2);color:var(--text);font-size:13px;outline:none}
+  .admin-fieldset input[type=text]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(34,211,238,.13)}
   .admin-fieldset .hint{font-size:11px;color:#6b7f96;margin:6px 0 0;line-height:1.5}
-  .admin-preview{
-    margin-top:16px;padding:11px 14px;border-radius:10px;
-    background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.25);
-    font-size:12.5px;color:#b6ecf5;
-  }
+  .admin-preview{margin-top:16px;padding:11px 14px;border-radius:10px;background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.25);font-size:12.5px;color:#b6ecf5}
   .admin-preview strong{color:var(--accent);font-weight:800}
   .admin-actions{display:flex;gap:8px}
   .admin-actions .btn{margin-top:0}
@@ -341,996 +202,689 @@
     .admin-body{grid-template-columns:1fr;grid-template-rows:auto 1fr}
     .admin-users{border-right:0;border-bottom:1px solid var(--line);max-height:180px}
   }
-  @media (prefers-reduced-motion:reduce){
-    *{animation:none!important;transition:none!important}
-  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
-<noscript>
-  <div style="padding:40px;text-align:center;color:#e9eff8">This site requires JavaScript.</div>
-</noscript>
+<noscript><div style="padding:40px;text-align:center;color:#e9eff8">This site requires JavaScript.</div></noscript>
 
-<!-- ============================= LOGIN GATE ============================= -->
-<div class="gate" id="gate">
-  <form class="gate-card" id="loginForm" autocomplete="on" novalidate>
-    <div class="gate-brand">Live<b>Sport</b></div>
-    <h1>Sign in</h1>
-    <p class="gate-sub">This site is private. Enter your credentials to continue.</p>
-    <label class="field"><span>Username</span>
-      <input id="u" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required>
-    </label>
-    <label class="field"><span>Password</span>
-      <input id="p" name="password" type="password" autocomplete="current-password" required>
-    </label>
-    <label class="remember"><input type="checkbox" id="remember"><span>Keep me signed in on this device</span></label>
-    <button class="gate-btn" id="loginBtn" type="submit">Sign in</button>
-    <div class="gate-msg" id="gateMsg" role="alert" aria-live="polite"></div>
-    <div class="gate-foot">Access is logged. Unauthorised use is prohibited.</div>
-  </form>
-</div>
-
-<!-- ================================ APP ================================ -->
 <div id="app" hidden>
-
-<header class="site-header">
-  <div class="wrap bar-top">
-    <a class="brand" href="./"><span class="mark" aria-hidden="true">▶</span><span>Live<b>Sport</b></span></a>
-    <div class="search">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-      <input id="search" type="search" placeholder="Search teams, leagues, venues…" autocomplete="off" aria-label="Search events">
-    </div>
-    <label class="switch">
-      <input type="checkbox" id="liveToggle"><span class="track"></span>
-      <span class="switch-label">Live only</span>
-    </label>
-    <button class="signout admin" id="adminBtn" hidden title="Manage user access">
-      <svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
-      Admin
-    </button>
-    <button class="signout" id="signout" title="Sign out">
-      <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
-      Sign out
-    </button>
-  </div>
-  <div class="wrap bar-chips">
-    <div class="chips" id="chips" role="tablist" aria-label="Filter by sport"></div>
-  </div>
-</header>
-
-<main class="wrap">
-  <div class="statusline">
-    <span id="count">Loading events…</span>
-    <span class="dot-sep"></span>
-    <span id="updated"></span>
-  </div>
-  <div class="grid" id="grid" aria-live="polite"></div>
-  <div class="state" id="error" hidden>
-    <div class="em">📡</div>
-    <h3>Couldn't load events</h3>
-    <p id="errorMsg">The events feed is unreachable right now.</p>
-    <button class="btn" id="retry">Try again</button>
-  </div>
-</main>
-
-<footer class="wrap site-footer">
-  <div>Event data and streams are provided by a third-party service. This site only indexes publicly available embeds and hosts no video content.</div>
-  <div class="who" id="who"></div>
-</footer>
-
-<!-- Player modal -->
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-  <div class="modal-box">
-    <div class="modal-head">
-      <div class="t">
-        <h2 id="modalTitle">Event</h2>
-        <div class="m" id="modalMeta"></div>
+  <header class="site-header">
+    <div class="wrap bar-top">
+      <a class="brand" href="index.html"><span class="mark" aria-hidden="true">▶</span><span>Live<b>Sport</b></span></a>
+      <nav class="nav">
+        <a href="index.html" data-page="main" class="active">Sports</a>
+        <a href="live-tv.html" data-page="live-tv" hidden>Live TV</a>
+      </nav>
+      <div class="user-bar">
+        <span class="who" data-auth-who></span>
+        <button class="signout admin" id="adminBtn" hidden title="Manage user access">
+          <svg viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          Admin
+        </button>
+        <button class="signout" data-auth-signout title="Sign out">
+          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+          Sign out
+        </button>
       </div>
-      <button class="icon-btn" id="openTab" title="Open in new tab" aria-label="Open stream in new tab">
-        <svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
-      </button>
-      <button class="icon-btn" id="closeModal" title="Close" aria-label="Close player">
-        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </button>
     </div>
-    <div class="player-wrap">
-      <iframe id="frame" src="about:blank" title="Stream player" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </div>
-    <div class="modal-foot">
-      <span>Streams are embedded from a third-party provider and may contain ads.</span>
-      <a href="#" id="sourceLink" target="_blank" rel="noopener noreferrer">Open source ↗</a>
-    </div>
-  </div>
-</div>
-
-<!-- Admin access panel -->
-<div class="modal" id="adminModal" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
-  <div class="modal-box admin-box">
-    <div class="modal-head">
-      <div class="t">
-        <h2 id="adminTitle">User access control</h2>
-        <div class="m">Choose which events each user is allowed to see. Changes are saved locally — export and redeploy to apply.</div>
+    <div class="wrap bar-top" style="padding-top:0;padding-bottom:12px;gap:14px">
+      <div class="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="search" type="search" placeholder="Search teams, leagues, venues…" autocomplete="off" aria-label="Search events">
       </div>
-      <button class="icon-btn" id="closeAdmin" title="Close" aria-label="Close admin panel">
-        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
-      </button>
+      <label class="switch">
+        <input type="checkbox" id="liveToggle"><span class="track"></span>
+        <span class="switch-label">Live only</span>
+      </label>
     </div>
-    <div class="admin-body">
-      <div class="admin-users" id="adminUsers"></div>
-      <div class="admin-editor" id="adminEditor"></div>
+    <div class="wrap bar-chips">
+      <div class="chips" id="chips" role="tablist" aria-label="Filter by sport"></div>
     </div>
-    <div class="modal-foot">
-      <span>Access rules are stored in <code style="color:#8b9bb1">users.json</code>. Export the file and commit it to your repo to apply.</span>
-      <div class="admin-actions">
-        <button class="btn" id="adminReset">Reset draft</button>
-        <button class="btn btn-primary" id="adminExport">Export users.json</button>
+  </header>
+
+  <main class="wrap">
+    <div class="statusline">
+      <span id="count">Loading events…</span>
+      <span class="dot-sep"></span>
+      <span id="updated"></span>
+    </div>
+    <div class="grid" id="grid" aria-live="polite"></div>
+    <div class="state" id="error" hidden>
+      <div class="em">📡</div>
+      <h3>Couldn't load events</h3>
+      <p id="errorMsg">The events feed is unreachable right now.</p>
+      <button class="btn" id="retry">Try again</button>
+    </div>
+  </main>
+
+  <footer class="wrap site-footer">
+    <div>Event data and streams are provided by a third-party service. This site only indexes publicly available embeds and hosts no video content.</div>
+    <div class="who" id="who"></div>
+  </footer>
+
+  <!-- Player modal -->
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+      <div class="modal-head">
+        <div class="t">
+          <h2 id="modalTitle">Event</h2>
+          <div class="m" id="modalMeta"></div>
+        </div>
+        <button class="icon-btn" id="openTab" title="Open in new tab" aria-label="Open stream in new tab">
+          <svg viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+        </button>
+        <button class="icon-btn" id="closeModal" title="Close" aria-label="Close player">
+          <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="player-wrap">
+        <iframe id="frame" src="about:blank" title="Stream player" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+      <div class="modal-foot">
+        <span>Streams are embedded from a third-party provider and may contain ads.</span>
+        <a href="#" id="sourceLink" target="_blank" rel="noopener noreferrer">Open source ↗</a>
       </div>
     </div>
   </div>
-</div>
 
-</div><!-- /#app -->
-
-<script>
-(() => {
-"use strict";
-const $ = (s) => document.querySelector(s);
-
-/* ==================================================================== */
-/*  AUTH CONFIG                                                         */
-/* ==================================================================== */
-const USERS_URL   = "./users.json";
-const SESSION_KEY = "livesport.session";
-const ATTEMPT_KEY = "livesport.attempts";
-
-const gate = {
-  root:  $("#gate"),
-  form:  $("#loginForm"),
-  user:  $("#u"),
-  pass:  $("#p"),
-  rem:   $("#remember"),
-  btn:   $("#loginBtn"),
-  msg:   $("#gateMsg"),
-};
-
-let CONFIG = null;        // parsed users.json
-let currentUser = null;   // logged-in user record
-
-/* -------------------------------------------------------------------- */
-/*  Crypto helpers                                                      */
-/* -------------------------------------------------------------------- */
-const encoder = new TextEncoder();
-async function sha256Hex(str){
-  const buf = await crypto.subtle.digest("SHA-256", encoder.encode(str));
-  return Array.from(new Uint8Array(buf), (b) => b.toString(16).padStart(2, "0")).join("");
-}
-function safeEqual(a, b){
-  a = String(a); b = String(b);
-  if (a.length !== b.length) return false;
-  let diff = 0;
-  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return diff === 0;
-}
-function cryptoAvailable(){
-  return typeof crypto !== "undefined" && crypto.subtle && typeof crypto.subtle.digest === "function";
-}
-
-/* -------------------------------------------------------------------- */
-/*  Config loading                                                      */
-/* -------------------------------------------------------------------- */
-async function loadConfig(){
-  const res = await fetch(USERS_URL, { cache: "no-store" });
-  if (!res.ok) throw new Error(`Could not load users.json (HTTP ${res.status})`);
-  const json = await res.json();
-  if (!json || !Array.isArray(json.users)) throw new Error('users.json is missing a "users" array');
-  CONFIG = json;
-  return json;
-}
-
-function findUser(username){
-  if (!CONFIG) return null;
-  const u = String(username || "").trim().toLowerCase();
-  return CONFIG.users.find((x) => String(x.username || "").trim().toLowerCase() === u) || null;
-}
-
-async function verifyPassword(user, password){
-  if (!user) return false;
-  if (user.hash && user.salt){
-    const computed = await sha256Hex(String(user.salt) + ":" + password);
-    return safeEqual(computed, String(user.hash).trim().toLowerCase());
-  }
-  if (typeof user.password === "string" && user.password.length){
-    return safeEqual(password, user.password);
-  }
-  return false;
-}
-
-/* -------------------------------------------------------------------- */
-/*  Sessions                                                            */
-/* -------------------------------------------------------------------- */
-function sessionHours(){
-  const h = Number(CONFIG && CONFIG.sessionHours);
-  return Number.isFinite(h) && h > 0 ? h : 12;
-}
-async function makeToken(user){
-  const secret = user.hash ? String(user.hash) : String(user.password || "");
-  return sha256Hex("livesport|" + String(user.username) + "|" + secret);
-}
-function clearSession(){
-  try { localStorage.removeItem(SESSION_KEY); } catch {}
-  try { sessionStorage.removeItem(SESSION_KEY); } catch {}
-}
-function readSession(){
-  let raw = null;
-  try { raw = localStorage.getItem(SESSION_KEY) || sessionStorage.getItem(SESSION_KEY); } catch {}
-  if (!raw) return null;
-  try {
-    const s = JSON.parse(raw);
-    if (!s || !s.u || !s.t || !s.exp) return null;
-    if (Date.now() > Number(s.exp)) { clearSession(); return null; }
-    return s;
-  } catch { return null; }
-}
-function writeSession(user, token, remember){
-  const data = JSON.stringify({ u: String(user.username), t: token, exp: Date.now() + sessionHours() * 3600 * 1000 });
-  try {
-    if (remember) { localStorage.setItem(SESSION_KEY, data); sessionStorage.removeItem(SESSION_KEY); }
-    else          { sessionStorage.setItem(SESSION_KEY, data); localStorage.removeItem(SESSION_KEY); }
-  } catch {}
-}
-async function verifySession(session){
-  const user = findUser(session.u);
-  if (!user) return null;
-  const expected = await makeToken(user);
-  return safeEqual(expected, session.t) ? user : null;
-}
-
-/* -------------------------------------------------------------------- */
-/*  Throttle                                                            */
-/* -------------------------------------------------------------------- */
-function getAttempts(){
-  try {
-    const o = JSON.parse(localStorage.getItem(ATTEMPT_KEY));
-    if (o && typeof o.n === "number" && typeof o.until === "number") return o;
-  } catch {}
-  return { n: 0, until: 0 };
-}
-function setAttempts(o){ try { localStorage.setItem(ATTEMPT_KEY, JSON.stringify(o)); } catch {} }
-
-/* -------------------------------------------------------------------- */
-/*  Gate UI                                                             */
-/* -------------------------------------------------------------------- */
-function gateMessage(text, ok){ gate.msg.textContent = text || ""; gate.msg.classList.toggle("ok", !!ok); }
-function setBusy(busy){ gate.btn.disabled = busy; gate.btn.textContent = busy ? "Signing in…" : "Sign in"; }
-
-/* ==================================================================== */
-/*  ACCESS CONTROL                                                      */
-/* ==================================================================== */
-/**
- * Decide if `user` may see `event`.
- *  - admin role → everything
- *  - access.all === true → everything
- *  - access.eventIds non-empty → only those IDs
- *  - access.sports / access.leagues non-empty → must match all
- *  - no rules at all → nothing (safe default)
- */
-function userCanSeeEvent(user, event){
-  if (!user || !event) return false;
-  if (user.role === "admin") return true;
-  const a = user.access || {};
-  if (a.all === true) return true;
-
-  const ids = Array.isArray(a.eventIds) ? a.eventIds.map(String) : [];
-  if (ids.length) return ids.includes(String(event.id));
-
-  const sports  = Array.isArray(a.sports)  ? a.sports  : [];
-  const leagues = Array.isArray(a.leagues) ? a.leagues : [];
-
-  if (!sports.length && !leagues.length) return false;
-
-  if (sports.length && !sports.includes(event.sport || "Other")) return false;
-  if (leagues.length && !leagues.includes(event.league)) return false;
-  return true;
-}
-
-/* ==================================================================== */
-/*  APP                                                                 */
-/* ==================================================================== */
-const API_URL    = "https://cinevid.st/api/public/events";
-const BASE_URL   = "https://cinevid.st";
-const REFRESH_MS = 60_000;
-const SKELETONS  = 8;
-
-const els = {
-  app:        $("#app"),
-  grid:       $("#grid"),
-  chips:      $("#chips"),
-  search:     $("#search"),
-  liveToggle: $("#liveToggle"),
-  count:      $("#count"),
-  updated:    $("#updated"),
-  error:      $("#error"),
-  errorMsg:   $("#errorMsg"),
-  retry:      $("#retry"),
-  modal:      $("#modal"),
-  frame:      $("#frame"),
-  modalTitle: $("#modalTitle"),
-  modalMeta:  $("#modalMeta"),
-  openTab:    $("#openTab"),
-  closeModal: $("#closeModal"),
-  sourceLink: $("#sourceLink"),
-  signout:    $("#signout"),
-  who:        $("#who"),
-  adminBtn:   $("#adminBtn"),
-  adminModal: $("#adminModal"),
-  adminUsers: $("#adminUsers"),
-  adminEditor:$("#adminEditor"),
-  closeAdmin: $("#closeAdmin"),
-  adminExport:$("#adminExport"),
-  adminReset: $("#adminReset"),
-};
-
-let events      = [];
-let byId        = new Map();
-let lastUpdated = null;
-let loading     = true;
-let activeId    = null;
-
-const filters = { sport: "All", q: "", liveOnly: false };
-
-let started = false;
-let timers  = [];
-
-/* -------------------------------------------------------------------- */
-/*  Helpers                                                             */
-/* -------------------------------------------------------------------- */
-const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) =>
-  ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-
-function abs(path){
-  if (!path || typeof path !== "string") return null;
-  try { return new URL(path, BASE_URL).href; } catch { return null; }
-}
-function kickoffDate(e){
-  if (!e || !e.date) return null;
-  const t = String(e.time || "").slice(0, 5) || "00:00";
-  const d = new Date(`${e.date}T${t}:00Z`);
-  return isNaN(d.getTime()) ? null : d;
-}
-function statusKey(e){
-  const s = String(e && e.status != null ? e.status : "").trim().toLowerCase();
-  if (!s || s === "ns" || s === "not started" || s === "scheduled") return "ns";
-  if (s.includes("live") || s === "ht" || s === "1h" || s === "2h") return "live";
-  return "ft";
-}
-function statusLabel(e){
-  const k = statusKey(e);
-  if (k === "live") return "Live";
-  if (k === "ns")   return "Upcoming";
-  return (e.status && String(e.status).trim()) || "Finished";
-}
-function fmtKickoff(e){
-  const d = kickoffDate(e);
-  if (!d) return "Time TBA";
-  const time = d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  const today = new Date(); today.setHours(0,0,0,0);
-  const day   = new Date(d); day.setHours(0,0,0,0);
-  const diff  = Math.round((day - today) / 86_400_000);
-  if (diff === 0)  return `Today · ${time}`;
-  if (diff === 1)  return `Tomorrow · ${time}`;
-  if (diff === -1) return `Yesterday · ${time}`;
-  const date = d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" });
-  return `${date} · ${time}`;
-}
-
-const ORDER = { live: 0, ns: 1, ft: 2 };
-function compareEvents(a, b){
-  const d = ORDER[statusKey(a)] - ORDER[statusKey(b)];
-  if (d !== 0) return d;
-  const ta = kickoffDate(a)?.getTime() ?? Infinity;
-  const tb = kickoffDate(b)?.getTime() ?? Infinity;
-  return statusKey(a) === "ft" ? tb - ta : ta - tb;
-}
-
-function accessibleEvents(){
-  if (!currentUser) return [];
-  return events.filter((e) => userCanSeeEvent(currentUser, e));
-}
-
-function visibleEvents(){
-  const q = filters.q.trim().toLowerCase();
-  return accessibleEvents().filter((e) => {
-    if (filters.liveOnly && statusKey(e) !== "live") return false;
-    if (filters.sport !== "All" && (e.sport || "Other") !== filters.sport) return false;
-    if (q) {
-      const hay = [e.title, e.sport, e.league, e.venue, e.round, e.homeTeam, e.awayTeam]
-        .filter(Boolean).join(" ").toLowerCase();
-      if (!hay.includes(q)) return false;
-    }
-    return true;
-  }).sort(compareEvents);
-}
-
-/* -------------------------------------------------------------------- */
-/*  Rendering                                                           */
-/* -------------------------------------------------------------------- */
-function renderChips(){
-  const list = accessibleEvents();
-  const counts = new Map();
-  for (const e of list) {
-    const s = e.sport || "Other";
-    counts.set(s, (counts.get(s) || 0) + 1);
-  }
-  if (filters.sport !== "All" && !counts.has(filters.sport)) filters.sport = "All";
-
-  const sports = [...counts.keys()].sort((a, b) => counts.get(b) - counts.get(a) || a.localeCompare(b));
-  const items = [{ name: "All", n: list.length }, ...sports.map((s) => ({ name: s, n: counts.get(s) }))];
-
-  els.chips.innerHTML = items.map(({ name, n }) => `
-    <button class="chip${filters.sport === name ? " active" : ""}" role="tab"
-            aria-selected="${filters.sport === name}" data-sport="${esc(name)}">
-      ${esc(name)}<span class="n">${n}</span>
-    </button>
-  `).join("");
-}
-
-function cardHTML(e){
-  const key    = statusKey(e);
-  const title  = e.title || "Untitled event";
-  const thumb  = abs(e.thumbnail);
-  const home   = abs(e.homeTeamImage);
-  const away   = abs(e.awayTeamImage);
-  const score  = e.score != null && String(e.score).trim() && String(e.score).trim() !== "null"
-               ? String(e.score).trim() : "";
-  const league = e.league || "";
-  const round  = e.round || "";
-  const sport  = e.sport || "Other";
-
-  const badge = key === "live"
-    ? `<span class="badge live"><span class="d"></span>Live</span>`
-    : `<span class="badge ${key}">${esc(statusLabel(e))}</span>`;
-
-  const meta = [league, round].filter(Boolean)
-    .map((v) => `<span class="ell">${esc(v)}</span>`).join('<span class="sep"></span>');
-
-  const fallbackLogos = (home || away)
-    ? `<div class="fallback">
-         ${home ? `<img class="logo" src="${esc(home)}" alt="" loading="lazy" onerror="this.remove()">` : ""}
-         <span class="vs">VS</span>
-         ${away ? `<img class="logo" src="${esc(away)}" alt="" loading="lazy" onerror="this.remove()">` : ""}
-       </div>` : "";
-
-  return `
-    <article class="card" role="button" tabindex="0" data-id="${esc(e.id)}" aria-label="Watch ${esc(title)}">
-      <div class="thumb">
-        ${fallbackLogos}
-        ${thumb ? `<img class="cover" src="${esc(thumb)}" alt="" loading="lazy" onerror="this.style.display='none'">` : ""}
-        ${badge}
-        <span class="sport-tag">${esc(sport)}</span>
+  <!-- Admin modal -->
+  <div class="modal" id="adminModal" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+    <div class="modal-box admin-box">
+      <div class="modal-head">
+        <div class="t">
+          <h2 id="adminTitle">User access control</h2>
+          <div class="m">Manage which pages and events each account can access. Export the file and redeploy to apply.</div>
+        </div>
+        <button class="icon-btn" id="closeAdmin" title="Close" aria-label="Close admin panel">
+          <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
       </div>
-      <div class="card-body">
-        <h3 class="card-title">${esc(title)}</h3>
-        ${meta ? `<div class="card-meta">${meta}</div>` : ""}
-        ${score ? `<div class="score">${esc(score)}</div>` : ""}
-        <div class="card-foot">
-          <span class="kick">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-            ${esc(fmtKickoff(e))}
-          </span>
-          <button class="watch" tabindex="-1" aria-hidden="true">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-            Watch
-          </button>
+      <div class="admin-body">
+        <div class="admin-users" id="adminUsers"></div>
+        <div class="admin-editor" id="adminEditor"></div>
+      </div>
+      <div class="modal-foot">
+        <span>Changes are kept in-memory. Export <code style="color:#8b9bb1">users.json</code> and commit it to your repo.</span>
+        <div class="admin-actions">
+          <button class="btn" id="adminReset">Reset draft</button>
+          <button class="btn btn-primary" id="adminExport">Export users.json</button>
         </div>
       </div>
-    </article>`;
-}
+    </div>
+  </div>
+</div>
 
-function skeletonHTML(){
-  return Array.from({ length: SKELETONS }, () => `
-    <div class="skel" aria-hidden="true">
-      <div class="s-thumb"></div>
-      <div class="s-line w60"></div>
-      <div class="s-line w40"></div>
-    </div>`).join("");
-}
+<script src="auth.js"></script>
+<script>
+(async () => {
+  const user = await LiveSportAuth.require("main");
 
-function render(){
-  if (loading && !events.length) {
-    els.grid.innerHTML = skeletonHTML();
-    els.count.textContent = "Loading events…";
-    els.error.hidden = true;
-    return;
+  document.getElementById("app").hidden = false;
+  LiveSportAuth.setupHeader(user);
+  startSportsPage(user);
+})();
+
+/* ==================================================================== */
+/*  Sports page (main)                                                   */
+/* ==================================================================== */
+function startSportsPage(currentUser) {
+  "use strict";
+
+  const API_URL    = "https://cinevid.st/api/public/events";
+  const BASE_URL   = "https://cinevid.st";
+  const REFRESH_MS = 60_000;
+  const SKELETONS  = 8;
+
+  const $ = (s) => document.querySelector(s);
+  const els = {
+    grid:       $("#grid"),
+    chips:      $("#chips"),
+    search:     $("#search"),
+    liveToggle: $("#liveToggle"),
+    count:      $("#count"),
+    updated:    $("#updated"),
+    error:      $("#error"),
+    errorMsg:   $("#errorMsg"),
+    retry:      $("#retry"),
+    modal:      $("#modal"),
+    frame:      $("#frame"),
+    modalTitle: $("#modalTitle"),
+    modalMeta:  $("#modalMeta"),
+    openTab:    $("#openTab"),
+    closeModal: $("#closeModal"),
+    sourceLink: $("#sourceLink"),
+    adminBtn:   $("#adminBtn"),
+    adminModal: $("#adminModal"),
+    adminUsers: $("#adminUsers"),
+    adminEditor:$("#adminEditor"),
+    closeAdmin: $("#closeAdmin"),
+    adminExport:$("#adminExport"),
+    adminReset: $("#adminReset"),
+    who:        $("#who"),
+  };
+
+  const isAdmin = currentUser.role === "admin";
+  els.adminBtn.hidden = !isAdmin;
+  els.who.textContent = `Signed in as ${currentUser.name || currentUser.username}${isAdmin ? " (admin)" : ""}`;
+
+  let events = [];
+  let byId = new Map();
+  let lastUpdated = null;
+  let loading = true;
+  let activeId = null;
+
+  const filters = { sport: "All", q: "", liveOnly: false };
+
+  /* ---------------- helpers ---------------- */
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+  function abs(path) {
+    if (!path || typeof path !== "string") return null;
+    try { return new URL(path, BASE_URL).href; } catch { return null; }
+  }
+  function kickoffDate(e) {
+    if (!e || !e.date) return null;
+    const t = String(e.time || "").slice(0, 5) || "00:00";
+    const d = new Date(`${e.date}T${t}:00Z`);
+    return isNaN(d.getTime()) ? null : d;
+  }
+  function statusKey(e) {
+    const s = String(e && e.status != null ? e.status : "").trim().toLowerCase();
+    if (!s || s === "ns" || s === "not started" || s === "scheduled") return "ns";
+    if (s.includes("live") || s === "ht" || s === "1h" || s === "2h") return "live";
+    return "ft";
+  }
+  function statusLabel(e) {
+    const k = statusKey(e);
+    if (k === "live") return "Live";
+    if (k === "ns")   return "Upcoming";
+    return (e.status && String(e.status).trim()) || "Finished";
+  }
+  function fmtKickoff(e) {
+    const d = kickoffDate(e);
+    if (!d) return "Time TBA";
+    const time = d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    const today = new Date(); today.setHours(0,0,0,0);
+    const day   = new Date(d); day.setHours(0,0,0,0);
+    const diff  = Math.round((day - today) / 86_400_000);
+    if (diff === 0)  return `Today · ${time}`;
+    if (diff === 1)  return `Tomorrow · ${time}`;
+    if (diff === -1) return `Yesterday · ${time}`;
+    const date = d.toLocaleDateString([], { weekday: "short", day: "numeric", month: "short" });
+    return `${date} · ${time}`;
   }
 
-  const list = visibleEvents();
-  const accessible = accessibleEvents();
-  const liveCount = accessible.filter((e) => statusKey(e) === "live").length;
-
-  els.count.innerHTML =
-    `<strong>${list.length}</strong> event${list.length === 1 ? "" : "s"}` +
-    (liveCount ? ` <span class="live-pill"><span class="d"></span>${liveCount} live</span>` : "");
-
-  if (!list.length) {
-    const allEmpty = accessible.length === 0;
-    els.grid.innerHTML = `
-      <div class="state">
-        <div class="em">${allEmpty ? "🔒" : "🏟️"}</div>
-        <h3>${allEmpty ? "No events available for your account" : "No events match your filters"}</h3>
-        <p>${allEmpty
-          ? "An administrator has not granted your account access to any current events. Contact them if you think this is a mistake."
-          : "Try clearing the search, picking a different sport, or turning off “Live only”."}</p>
-      </div>`;
-    return;
+  const ORDER = { live: 0, ns: 1, ft: 2 };
+  function compareEvents(a, b) {
+    const d = ORDER[statusKey(a)] - ORDER[statusKey(b)];
+    if (d !== 0) return d;
+    const ta = kickoffDate(a)?.getTime() ?? Infinity;
+    const tb = kickoffDate(b)?.getTime() ?? Infinity;
+    return statusKey(a) === "ft" ? tb - ta : ta - tb;
   }
-  els.grid.innerHTML = list.map(cardHTML).join("");
-}
 
-function showError(msg){
-  loading = false;
-  els.error.hidden = false;
-  els.errorMsg.textContent = msg || "The events feed is unreachable right now.";
-  if (!events.length) els.grid.innerHTML = "";
-  els.count.textContent = "—";
-}
+  /* ---------------- event-level permission ---------------- */
+  function userCanSeeEvent(user, event) {
+    if (!user || !event) return false;
+    if (user.role === "admin") return true;
+    const a = user.access || {};
+    if (a.all === true) return true;
+    const ids = Array.isArray(a.eventIds) ? a.eventIds.map(String) : [];
+    if (ids.length) return ids.includes(String(event.id));
+    const sports  = Array.isArray(a.sports)  ? a.sports  : [];
+    const leagues = Array.isArray(a.leagues) ? a.leagues : [];
+    if (!sports.length && !leagues.length) return false;
+    if (sports.length && !sports.includes(event.sport || "Other")) return false;
+    if (leagues.length && !leagues.includes(event.league)) return false;
+    return true;
+  }
 
-/* -------------------------------------------------------------------- */
-/*  Data loading                                                        */
-/* -------------------------------------------------------------------- */
-async function load({ silent = false } = {}){
-  if (!silent) { loading = true; render(); }
-  try {
-    const res = await fetch(API_URL, { cache: "no-store" });
-    if (!res.ok) throw new Error(`Server responded with HTTP ${res.status}`);
-    const data = await res.json();
-    const list = Array.isArray(data) ? data : Array.isArray(data.events) ? data.events : [];
+  function accessibleEvents() {
+    return events.filter((e) => userCanSeeEvent(currentUser, e));
+  }
+  function visibleEvents() {
+    const q = filters.q.trim().toLowerCase();
+    return accessibleEvents().filter((e) => {
+      if (filters.liveOnly && statusKey(e) !== "live") return false;
+      if (filters.sport !== "All" && (e.sport || "Other") !== filters.sport) return false;
+      if (q) {
+        const hay = [e.title, e.sport, e.league, e.venue, e.round, e.homeTeam, e.awayTeam]
+          .filter(Boolean).join(" ").toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    }).sort(compareEvents);
+  }
 
-    events = list.filter((e) => e && e.id != null);
-    byId   = new Map(events.map((e) => [String(e.id), e]));
-    lastUpdated = Date.now();
-    loading = false;
-
-    els.error.hidden = true;
-    renderChips();
-    render();
-    tickUpdated();
-
-    if (activeId && byId.has(activeId)) {
-      const e = byId.get(activeId);
-      if (userCanSeeEvent(currentUser, e)) updateModalHead(e);
-      else closePlayer();
+  /* ---------------- rendering ---------------- */
+  function renderChips() {
+    const list = accessibleEvents();
+    const counts = new Map();
+    for (const e of list) {
+      const s = e.sport || "Other";
+      counts.set(s, (counts.get(s) || 0) + 1);
     }
-  } catch (err) {
-    console.error("[events]", err);
-    if (!silent || !events.length) showError(err && err.message ? err.message : null);
+    if (filters.sport !== "All" && !counts.has(filters.sport)) filters.sport = "All";
+    const sports = [...counts.keys()].sort((a, b) => counts.get(b) - counts.get(a) || a.localeCompare(b));
+    const items = [{ name: "All", n: list.length }, ...sports.map((s) => ({ name: s, n: counts.get(s) }))];
+    els.chips.innerHTML = items.map(({ name, n }) => `
+      <button class="chip${filters.sport === name ? " active" : ""}" role="tab"
+              aria-selected="${filters.sport === name}" data-sport="${esc(name)}">
+        ${esc(name)}<span class="n">${n}</span>
+      </button>
+    `).join("");
   }
-}
 
-/* -------------------------------------------------------------------- */
-/*  Player modal                                                        */
-/* -------------------------------------------------------------------- */
-function updateModalHead(e){
-  const bits = [e.sport, e.league, e.round].filter(Boolean).join(" · ");
-  els.modalTitle.textContent = e.title || "Event";
-  const score = e.score && String(e.score).trim() ? `  •  ${e.score}` : "";
-  els.modalMeta.textContent = `${statusLabel(e)}${score}${bits ? `  •  ${bits}` : ""}`;
-  const url = abs(e.playerUrl);
-  if (url) {
-    els.openTab.disabled = false;
-    els.openTab.dataset.href = url;
-    els.sourceLink.href = url;
-  } else {
-    els.openTab.disabled = true;
-    els.sourceLink.removeAttribute("href");
+  function cardHTML(e) {
+    const key    = statusKey(e);
+    const title  = e.title || "Untitled event";
+    const thumb  = abs(e.thumbnail);
+    const home   = abs(e.homeTeamImage);
+    const away   = abs(e.awayTeamImage);
+    const score  = e.score != null && String(e.score).trim() && String(e.score).trim() !== "null"
+                 ? String(e.score).trim() : "";
+    const league = e.league || "";
+    const round  = e.round || "";
+    const sport  = e.sport || "Other";
+
+    const badge = key === "live"
+      ? `<span class="badge live"><span class="d"></span>Live</span>`
+      : `<span class="badge ${key}">${esc(statusLabel(e))}</span>`;
+
+    const meta = [league, round].filter(Boolean)
+      .map((v) => `<span class="ell">${esc(v)}</span>`).join('<span class="sep"></span>');
+
+    const fallbackLogos = (home || away)
+      ? `<div class="fallback">
+           ${home ? `<img class="logo" src="${esc(home)}" alt="" loading="lazy" onerror="this.remove()">` : ""}
+           <span class="vs">VS</span>
+           ${away ? `<img class="logo" src="${esc(away)}" alt="" loading="lazy" onerror="this.remove()">` : ""}
+         </div>` : "";
+
+    return `
+      <article class="card" role="button" tabindex="0" data-id="${esc(e.id)}" aria-label="Watch ${esc(title)}">
+        <div class="thumb">
+          ${fallbackLogos}
+          ${thumb ? `<img class="cover" src="${esc(thumb)}" alt="" loading="lazy" onerror="this.style.display='none'">` : ""}
+          ${badge}
+          <span class="sport-tag">${esc(sport)}</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">${esc(title)}</h3>
+          ${meta ? `<div class="card-meta">${meta}</div>` : ""}
+          ${score ? `<div class="score">${esc(score)}</div>` : ""}
+          <div class="card-foot">
+            <span class="kick">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              ${esc(fmtKickoff(e))}
+            </span>
+            <button class="watch" tabindex="-1" aria-hidden="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              Watch
+            </button>
+          </div>
+        </div>
+      </article>`;
   }
-}
-function openPlayer(e){
-  if (!userCanSeeEvent(currentUser, e)) return;
-  const url = abs(e.playerUrl);
-  if (!url) return;
-  activeId = String(e.id);
-  updateModalHead(e);
-  els.frame.src = url;
-  els.modal.classList.add("open");
-  document.body.style.overflow = "hidden";
-  els.closeModal.focus();
-}
-function closePlayer(){
-  activeId = null;
-  els.modal.classList.remove("open");
-  els.frame.src = "about:blank";
-  document.body.style.overflow = "";
-}
-function tickUpdated(){
-  if (!lastUpdated) return;
-  const s = Math.round((Date.now() - lastUpdated) / 1000);
-  if (s < 15)      els.updated.textContent = "Updated just now";
-  else if (s < 60) els.updated.textContent = `Updated ${s}s ago`;
-  else             els.updated.textContent = `Updated ${Math.floor(s / 60)}m ago`;
-}
 
-/* -------------------------------------------------------------------- */
-/*  App lifecycle                                                       */
-/* -------------------------------------------------------------------- */
-function startApp(user){
-  if (started) return;
-  started = true;
-  currentUser = user;
+  function skeletonHTML() {
+    return Array.from({ length: SKELETONS }, () => `
+      <div class="skel" aria-hidden="true">
+        <div class="s-thumb"></div>
+        <div class="s-line w60"></div>
+        <div class="s-line w40"></div>
+      </div>`).join("");
+  }
 
-  els.who.textContent = user ? `Signed in as ${user.name || user.username}${user.role === "admin" ? " (admin)" : ""}` : "";
-  els.adminBtn.hidden = !(user && user.role === "admin");
+  function render() {
+    if (loading && !events.length) {
+      els.grid.innerHTML = skeletonHTML();
+      els.count.textContent = "Loading events…";
+      els.error.hidden = true;
+      return;
+    }
+    const list = visibleEvents();
+    const accessible = accessibleEvents();
+    const liveCount = accessible.filter((e) => statusKey(e) === "live").length;
+    els.count.innerHTML =
+      `<strong>${list.length}</strong> event${list.length === 1 ? "" : "s"}` +
+      (liveCount ? ` <span class="live-pill"><span class="d"></span>${liveCount} live</span>` : "");
+    if (!list.length) {
+      const allEmpty = accessible.length === 0;
+      els.grid.innerHTML = `
+        <div class="state">
+          <div class="em">${allEmpty ? "🔒" : "🏟️"}</div>
+          <h3>${allEmpty ? "No events available for your account" : "No events match your filters"}</h3>
+          <p>${allEmpty
+            ? "An administrator has not granted your account access to any current events."
+            : "Try clearing the search, picking a different sport, or turning off “Live only”."}</p>
+        </div>`;
+      return;
+    }
+    els.grid.innerHTML = list.map(cardHTML).join("");
+  }
 
+  function showError(msg) {
+    loading = false;
+    els.error.hidden = false;
+    els.errorMsg.textContent = msg || "The events feed is unreachable right now.";
+    if (!events.length) els.grid.innerHTML = "";
+    els.count.textContent = "—";
+  }
+
+  /* ---------------- data loading ---------------- */
+  async function load({ silent = false } = {}) {
+    if (!silent) { loading = true; render(); }
+    try {
+      const res = await fetch(API_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error(`Server responded with HTTP ${res.status}`);
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : Array.isArray(data.events) ? data.events : [];
+      events = list.filter((e) => e && e.id != null);
+      byId = new Map(events.map((e) => [String(e.id), e]));
+      lastUpdated = Date.now();
+      loading = false;
+      els.error.hidden = true;
+      renderChips();
+      render();
+      tickUpdated();
+      if (activeId && byId.has(activeId)) {
+        const e = byId.get(activeId);
+        if (userCanSeeEvent(currentUser, e)) updateModalHead(e);
+        else closePlayer();
+      }
+    } catch (err) {
+      console.error("[events]", err);
+      if (!silent || !events.length) showError(err && err.message ? err.message : null);
+    }
+  }
+
+  /* ---------------- player modal ---------------- */
+  function updateModalHead(e) {
+    const bits = [e.sport, e.league, e.round].filter(Boolean).join(" · ");
+    els.modalTitle.textContent = e.title || "Event";
+    const score = e.score && String(e.score).trim() ? `  •  ${e.score}` : "";
+    els.modalMeta.textContent = `${statusLabel(e)}${score}${bits ? `  •  ${bits}` : ""}`;
+    const url = abs(e.playerUrl);
+    if (url) {
+      els.openTab.disabled = false;
+      els.openTab.dataset.href = url;
+      els.sourceLink.href = url;
+    } else {
+      els.openTab.disabled = true;
+      els.sourceLink.removeAttribute("href");
+    }
+  }
+  function openPlayer(e) {
+    if (!userCanSeeEvent(currentUser, e)) return;
+    const url = abs(e.playerUrl);
+    if (!url) return;
+    activeId = String(e.id);
+    updateModalHead(e);
+    els.frame.src = url;
+    els.modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+    els.closeModal.focus();
+  }
+  function closePlayer() {
+    activeId = null;
+    els.modal.classList.remove("open");
+    els.frame.src = "about:blank";
+    document.body.style.overflow = "";
+  }
+  function tickUpdated() {
+    if (!lastUpdated) return;
+    const s = Math.round((Date.now() - lastUpdated) / 1000);
+    if (s < 15)      els.updated.textContent = "Updated just now";
+    else if (s < 60) els.updated.textContent = `Updated ${s}s ago`;
+    else             els.updated.textContent = `Updated ${Math.floor(s / 60)}m ago`;
+  }
+
+  /* ---------------- admin panel ---------------- */
+  let configDraft = null;
+  let selectedAdminUser = null;
+
+  function openAdminPanel() {
+    if (!isAdmin) return;
+    if (!configDraft) configDraft = JSON.parse(JSON.stringify(LiveSportAuth.getConfig()));
+    selectedAdminUser = configDraft.users[0]?.username || null;
+    renderAdminUsers();
+    renderAdminEditor();
+    els.adminModal.classList.add("open");
+    document.body.style.overflow = "hidden";
+    els.closeAdmin.focus();
+  }
+  function closeAdminPanel() {
+    els.adminModal.classList.remove("open");
+    if (!els.modal.classList.contains("open")) document.body.style.overflow = "";
+    selectedAdminUser = null;
+  }
+  function renderAdminUsers() {
+    if (!configDraft) return;
+    els.adminUsers.innerHTML = configDraft.users.map((u) => {
+      const count = events.length ? events.filter((e) => userCanSeeEvent(u, e)).length : "–";
+      return `
+        <div class="admin-user ${u.username === selectedAdminUser ? "selected" : ""}" data-username="${esc(u.username)}">
+          <div class="au-name">${esc(u.name || u.username)}</div>
+          <div class="au-meta">
+            <span class="au-role ${u.role === "admin" ? "role-admin" : ""}">${esc(u.role || "user")}</span>
+            <span class="au-count" data-username="${esc(u.username)}">${count} events</span>
+          </div>
+        </div>`;
+    }).join("");
+  }
+  function parseList(v) {
+    return String(v || "").split(/[,\s]+/).map((s) => s.trim()).filter(Boolean);
+  }
+  function renderAdminEditor() {
+    if (!selectedAdminUser || !configDraft) {
+      els.adminEditor.innerHTML = '<p style="color:var(--muted);font-size:13px">Select a user to edit their access.</p>';
+      return;
+    }
+    const user = configDraft.users.find((u) => u.username === selectedAdminUser);
+    if (!user) return;
+
+    const isAdminRole = user.role === "admin";
+    const pages = Array.isArray(user.pages) ? user.pages : [];
+    const a = user.access || {};
+    const all      = a.all === true;
+    const eventIds = (a.eventIds || []).join(", ");
+    const sports   = (a.sports   || []).join(", ");
+    const leagues  = (a.leagues  || []).join(", ");
+    const hasMain  = isAdminRole || pages.includes("main");
+
+    const pageChecks = LiveSportAuth.PAGES.map((p) => `
+      <label class="admin-check${isAdminRole ? " disabled" : ""}">
+        <input type="checkbox" data-page="${esc(p.id)}"
+               ${isAdminRole || pages.includes(p.id) ? "checked" : ""}
+               ${isAdminRole ? "disabled" : ""}>
+        <span>${esc(p.label)} <span style="color:#6b7f96;font-weight:400">(${esc(p.href)})</span></span>
+      </label>
+    `).join("");
+
+    const eventSection = hasMain ? `
+      <fieldset class="admin-fieldset">
+        <legend>Event access (Sports page)</legend>
+        <label class="admin-check">
+          <input type="checkbox" id="editAll" ${all ? "checked" : ""}>
+          <span>Allow all events (ignore restrictions below)</span>
+        </label>
+        <label class="admin-field">
+          <span>Specific event IDs</span>
+          <input type="text" id="editEventIds" value="${esc(eventIds)}" placeholder="comma-separated IDs">
+        </label>
+        <details class="id-helper">
+          <summary>Show current event IDs (${events.length})</summary>
+          <div class="id-list">${events.map((e) => esc(String(e.id))).join("<br>") || "—"}</div>
+        </details>
+        <label class="admin-field">
+          <span>Allowed sports</span>
+          <input type="text" id="editSports" value="${esc(sports)}" placeholder="e.g. Football, Basketball">
+        </label>
+        <label class="admin-field">
+          <span>Allowed leagues</span>
+          <input type="text" id="editLeagues" value="${esc(leagues)}" placeholder="e.g. Premier League, NBA">
+        </label>
+      </fieldset>` : "";
+
+    els.adminEditor.innerHTML = `
+      <h3>${esc(user.name || user.username)}</h3>
+      <span class="username-sub">@${esc(user.username)}</span>
+
+      <label class="admin-field">
+        <span>Role</span>
+        <select id="editRole">
+          <option value="user"  ${!isAdminRole ? "selected" : ""}>User</option>
+          <option value="admin" ${isAdminRole  ? "selected" : ""}>Admin (all pages + all events)</option>
+        </select>
+      </label>
+
+      <fieldset class="admin-fieldset">
+        <legend>Page access</legend>
+        ${pageChecks}
+        <p class="hint">Admin role always has every page. Other users only see the pages ticked here.</p>
+      </fieldset>
+
+      ${eventSection}
+
+      <div class="admin-preview" id="adminPreview"></div>
+    `;
+
+    const onAny = () => updateDraftFromEditor();
+    ["editRole", "editAll", "editEventIds", "editSports", "editLeagues"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener("input", onAny);
+    });
+    els.adminEditor.querySelectorAll("[data-page]").forEach((cb) => {
+      cb.addEventListener("change", onAny);
+    });
+
+    updatePreview();
+  }
+  function updateDraftFromEditor() {
+    if (!selectedAdminUser || !configDraft) return;
+    const user = configDraft.users.find((u) => u.username === selectedAdminUser);
+    if (!user) return;
+
+    const role = document.getElementById("editRole").value;
+    if (role === "admin") {
+      user.role = "admin";
+      user.pages = LiveSportAuth.PAGES.map((p) => p.id);
+    } else {
+      user.role = "user";
+      const checked = [];
+      els.adminEditor.querySelectorAll("[data-page]:checked").forEach((cb) => {
+        checked.push(cb.dataset.page);
+      });
+      user.pages = checked;
+
+      if (checked.includes("main")) {
+        const allEl = document.getElementById("editAll");
+        const eventIds = parseList(document.getElementById("editEventIds")?.value);
+        const sports   = parseList(document.getElementById("editSports")?.value);
+        const leagues  = parseList(document.getElementById("editLeagues")?.value);
+        if (allEl && allEl.checked) user.access = { all: true };
+        else {
+          const acc = {};
+          if (eventIds.length) acc.eventIds = eventIds;
+          if (sports.length)   acc.sports = sports;
+          if (leagues.length)  acc.leagues = leagues;
+          user.access = acc;
+        }
+      }
+    }
+
+    updatePreview();
+    updateAdminUserCounts();
+  }
+  function updatePreview() {
+    const el = document.getElementById("adminPreview");
+    if (!el) return;
+    const user = configDraft.users.find((u) => u.username === selectedAdminUser);
+    if (!user) { el.textContent = ""; return; }
+    const pageList = LiveSportAuth.PAGES
+      .filter((p) => LiveSportAuth.userCanSeePage(user, p.id))
+      .map((p) => p.label).join(", ");
+    const visible = events.length ? events.filter((e) => userCanSeeEvent(user, e)).length : "—";
+    el.innerHTML = `<strong>Pages:</strong> ${pageList || "none"} · <strong>Events visible:</strong> ${visible} of ${events.length}`;
+  }
+  function updateAdminUserCounts() {
+    if (!configDraft) return;
+    document.querySelectorAll(".au-count[data-username]").forEach((el) => {
+      const u = configDraft.users.find((x) => x.username === el.dataset.username);
+      if (!u) return;
+      const n = events.length ? events.filter((e) => userCanSeeEvent(u, e)).length : "–";
+      el.textContent = `${n} events`;
+    });
+  }
+  function exportUsersJson() {
+    if (!configDraft) return;
+    const out = { ...LiveSportAuth.getConfig(), users: configDraft.users };
+    const blob = new Blob([JSON.stringify(out, null, 2) + "\n"], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "users.json";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  /* ---------------- wiring ---------------- */
+  els.grid.addEventListener("click", (ev) => {
+    const card = ev.target.closest(".card"); if (!card) return;
+    const e = byId.get(card.dataset.id); if (e) openPlayer(e);
+  });
+  els.grid.addEventListener("keydown", (ev) => {
+    if (ev.key !== "Enter" && ev.key !== " ") return;
+    const card = ev.target.closest(".card"); if (!card) return;
+    ev.preventDefault();
+    const e = byId.get(card.dataset.id); if (e) openPlayer(e);
+  });
+  els.chips.addEventListener("click", (ev) => {
+    const chip = ev.target.closest(".chip"); if (!chip) return;
+    filters.sport = chip.dataset.sport; renderChips(); render();
+  });
+  els.search.addEventListener("input", () => { filters.q = els.search.value; render(); });
+  els.liveToggle.addEventListener("change", () => { filters.liveOnly = els.liveToggle.checked; render(); });
+  els.closeModal.addEventListener("click", closePlayer);
+  els.modal.addEventListener("click", (ev) => { if (ev.target === els.modal) closePlayer(); });
+  document.addEventListener("keydown", (ev) => {
+    if (ev.key !== "Escape") return;
+    if (els.adminModal.classList.contains("open")) closeAdminPanel();
+    else if (els.modal.classList.contains("open")) closePlayer();
+  });
+  els.openTab.addEventListener("click", () => {
+    const url = els.openTab.dataset.href;
+    if (url) window.open(url, "_blank", "noopener");
+  });
+  els.retry.addEventListener("click", () => load());
+
+  els.adminBtn.addEventListener("click", openAdminPanel);
+  els.closeAdmin.addEventListener("click", closeAdminPanel);
+  els.adminModal.addEventListener("click", (ev) => { if (ev.target === els.adminModal) closeAdminPanel(); });
+  els.adminUsers.addEventListener("click", (ev) => {
+    const row = ev.target.closest(".admin-user"); if (!row) return;
+    selectedAdminUser = row.dataset.username;
+    renderAdminUsers(); renderAdminEditor();
+  });
+  els.adminExport.addEventListener("click", exportUsersJson);
+  els.adminReset.addEventListener("click", () => {
+    if (!confirm("Discard all unsaved access changes?")) return;
+    configDraft = JSON.parse(JSON.stringify(LiveSportAuth.getConfig()));
+    if (!selectedAdminUser || !configDraft.users.find((u) => u.username === selectedAdminUser)) {
+      selectedAdminUser = configDraft.users[0]?.username || null;
+    }
+    renderAdminUsers(); renderAdminEditor();
+  });
+
+  /* ---------------- boot ---------------- */
   render();
   load();
-
-  timers.push(setInterval(() => load({ silent: true }), REFRESH_MS));
-  timers.push(setInterval(tickUpdated, 5_000));
+  setInterval(() => load({ silent: true }), REFRESH_MS);
+  setInterval(tickUpdated, 5_000);
 }
-function stopApp(){
-  started = false;
-  timers.forEach(clearInterval);
-  timers = [];
-  closePlayer();
-  closeAdminPanel();
-  currentUser = null;
-  events = []; byId = new Map(); lastUpdated = null; loading = true;
-  filters.sport = "All"; filters.q = ""; filters.liveOnly = false;
-  els.search.value = ""; els.liveToggle.checked = false;
-  els.chips.innerHTML = ""; els.grid.innerHTML = "";
-  els.count.textContent = "Loading events…";
-  els.updated.textContent = "";
-  els.error.hidden = true;
-  els.who.textContent = "";
-  els.adminBtn.hidden = true;
-}
-
-/* -------------------------------------------------------------------- */
-/*  Admin panel                                                         */
-/* -------------------------------------------------------------------- */
-let configDraft = null;         // deep copy for editing
-let selectedAdminUser = null;
-
-function openAdminPanel(){
-  if (!currentUser || currentUser.role !== "admin") return;
-  if (!configDraft) configDraft = JSON.parse(JSON.stringify(CONFIG));
-  selectedAdminUser = configDraft.users[0]?.username || null;
-  renderAdminUsers();
-  renderAdminEditor();
-  els.adminModal.classList.add("open");
-  document.body.style.overflow = "hidden";
-  els.closeAdmin.focus();
-}
-function closeAdminPanel(){
-  els.adminModal.classList.remove("open");
-  if (!els.modal.classList.contains("open")) document.body.style.overflow = "";
-  selectedAdminUser = null;
-}
-function accessSummary(u){
-  if (u.role === "admin") return "Admin — full access";
-  const a = u.access || {};
-  if (a.all === true) return "All events";
-  const bits = [];
-  if (Array.isArray(a.eventIds) && a.eventIds.length) bits.push(`${a.eventIds.length} specific event${a.eventIds.length === 1 ? "" : "s"}`);
-  if (Array.isArray(a.sports) && a.sports.length)  bits.push("sports: " + a.sports.join(", "));
-  if (Array.isArray(a.leagues) && a.leagues.length) bits.push("leagues: " + a.leagues.join(", "));
-  return bits.length ? bits.join(" · ") : "No access (default deny)";
-}
-function renderAdminUsers(){
-  if (!configDraft) return;
-  els.adminUsers.innerHTML = configDraft.users.map((u) => {
-    const count = events.length ? events.filter((e) => userCanSeeEvent(u, e)).length : "–";
-    return `
-      <div class="admin-user ${u.username === selectedAdminUser ? "selected" : ""}" data-username="${esc(u.username)}">
-        <div class="au-name">${esc(u.name || u.username)}</div>
-        <div class="au-meta">
-          <span class="au-role ${u.role === "admin" ? "role-admin" : ""}">${esc(u.role || "user")}</span>
-          <span class="au-count" data-username="${esc(u.username)}">${count} events</span>
-        </div>
-      </div>`;
-  }).join("");
-}
-function parseList(v){
-  return String(v || "").split(/[,\s]+/).map((s) => s.trim()).filter(Boolean);
-}
-function renderAdminEditor(){
-  if (!selectedAdminUser || !configDraft) {
-    els.adminEditor.innerHTML = '<p style="color:var(--muted);font-size:13px">Select a user to edit their access.</p>';
-    return;
-  }
-  const user = configDraft.users.find((u) => u.username === selectedAdminUser);
-  if (!user) return;
-
-  const a = user.access || {};
-  const all       = a.all === true;
-  const eventIds  = (a.eventIds || []).join(", ");
-  const sports    = (a.sports   || []).join(", ");
-  const leagues   = (a.leagues  || []).join(", ");
-  const isAdminRole = user.role === "admin";
-
-  els.adminEditor.innerHTML = `
-    <h3>${esc(user.name || user.username)}</h3>
-    <span class="username-sub">@${esc(user.username)}</span>
-
-    <label class="admin-field">
-      <span>Role</span>
-      <select id="editRole">
-        <option value="user"  ${!isAdminRole ? "selected" : ""}>User</option>
-        <option value="admin" ${isAdminRole  ? "selected" : ""}>Admin (sees everything)</option>
-      </select>
-    </label>
-
-    <label class="admin-check">
-      <input type="checkbox" id="editAll" ${all ? "checked" : ""} ${isAdminRole ? "disabled" : ""}>
-      <span>Allow all events (ignore restrictions below)</span>
-    </label>
-
-    <fieldset class="admin-fieldset">
-      <legend>Specific event IDs</legend>
-      <input type="text" id="editEventIds" value="${esc(eventIds)}"
-             placeholder="comma-separated IDs" ${isAdminRole ? "disabled" : ""}>
-      <p class="hint">If non-empty, only these events are allowed. Overrides sports/leagues. Current event IDs are listed below.</p>
-      <details class="id-helper">
-        <summary>Show current event IDs (${events.length})</summary>
-        <div class="id-list">${events.map((e) => esc(String(e.id))).join("<br>") || "—"}</div>
-      </details>
-    </fieldset>
-
-    <fieldset class="admin-fieldset">
-      <legend>Allowed sports</legend>
-      <input type="text" id="editSports" value="${esc(sports)}"
-             placeholder="e.g. Football, Basketball" ${isAdminRole ? "disabled" : ""}>
-      <p class="hint">Leave empty for no sport restriction. Must match all listed filters.</p>
-    </fieldset>
-
-    <fieldset class="admin-fieldset">
-      <legend>Allowed leagues</legend>
-      <input type="text" id="editLeagues" value="${esc(leagues)}"
-             placeholder="e.g. Premier League, NBA" ${isAdminRole ? "disabled" : ""}>
-    </fieldset>
-
-    <div class="admin-preview" id="adminPreview"></div>
-  `;
-
-  // Wire inputs
-  const onAny = () => updateDraftFromEditor();
-  ["editRole", "editAll", "editEventIds", "editSports", "editLeagues"].forEach((id) => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener("input", onAny);
-  });
-
-  updatePreview();
-}
-function updateDraftFromEditor(){
-  if (!selectedAdminUser || !configDraft) return;
-  const user = configDraft.users.find((u) => u.username === selectedAdminUser);
-  if (!user) return;
-
-  const role = document.getElementById("editRole").value;
-  const all = document.getElementById("editAll").checked;
-  const eventIds = parseList(document.getElementById("editEventIds").value);
-  const sports   = parseList(document.getElementById("editSports").value);
-  const leagues  = parseList(document.getElementById("editLeagues").value);
-
-  user.role = role;
-  if (role === "admin") {
-    delete user.access;
-  } else if (all) {
-    user.access = { all: true };
-  } else {
-    const acc = {};
-    if (eventIds.length) acc.eventIds = eventIds;
-    if (sports.length)   acc.sports = sports;
-    if (leagues.length)  acc.leagues = leagues;
-    user.access = acc;
-  }
-
-  updatePreview();
-  updateAdminUserCounts();
-}
-function updatePreview(){
-  const el = document.getElementById("adminPreview");
-  if (!el) return;
-  const user = configDraft.users.find((u) => u.username === selectedAdminUser);
-  if (!user) { el.textContent = ""; return; }
-  if (user.role === "admin") {
-    el.innerHTML = `<strong>Admin</strong> — this user can see all ${events.length} events.`;
-    return;
-  }
-  if (!events.length) { el.textContent = "No events loaded yet."; return; }
-  const visible = events.filter((e) => userCanSeeEvent(user, e)).length;
-  const pct = events.length ? Math.round((visible / events.length) * 100) : 0;
-  el.innerHTML = `<strong>${visible}</strong> of ${events.length} events visible (${pct}%). ` +
-    (visible === 0 ? "This user will see nothing." : "");
-}
-function updateAdminUserCounts(){
-  if (!configDraft) return;
-  document.querySelectorAll(".au-count[data-username]").forEach((el) => {
-    const u = configDraft.users.find((x) => x.username === el.dataset.username);
-    if (!u) return;
-    const n = events.length ? events.filter((e) => userCanSeeEvent(u, e)).length : "–";
-    el.textContent = `${n} events`;
-  });
-}
-function exportUsersJson(){
-  if (!configDraft) return;
-  const out = { ...CONFIG, users: configDraft.users };
-  const blob = new Blob([JSON.stringify(out, null, 2) + "\n"], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "users.json";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-}
-
-/* -------------------------------------------------------------------- */
-/*  Event wiring                                                        */
-/* -------------------------------------------------------------------- */
-els.grid.addEventListener("click", (ev) => {
-  const card = ev.target.closest(".card");
-  if (!card) return;
-  const e = byId.get(card.dataset.id);
-  if (e) openPlayer(e);
-});
-els.grid.addEventListener("keydown", (ev) => {
-  if (ev.key !== "Enter" && ev.key !== " ") return;
-  const card = ev.target.closest(".card");
-  if (!card) return;
-  ev.preventDefault();
-  const e = byId.get(card.dataset.id);
-  if (e) openPlayer(e);
-});
-els.chips.addEventListener("click", (ev) => {
-  const chip = ev.target.closest(".chip");
-  if (!chip) return;
-  filters.sport = chip.dataset.sport;
-  renderChips();
-  render();
-});
-els.search.addEventListener("input", () => { filters.q = els.search.value; render(); });
-els.liveToggle.addEventListener("change", () => { filters.liveOnly = els.liveToggle.checked; render(); });
-els.closeModal.addEventListener("click", closePlayer);
-els.modal.addEventListener("click", (ev) => { if (ev.target === els.modal) closePlayer(); });
-document.addEventListener("keydown", (ev) => {
-  if (ev.key !== "Escape") return;
-  if (els.adminModal.classList.contains("open")) closeAdminPanel();
-  else if (els.modal.classList.contains("open")) closePlayer();
-});
-els.openTab.addEventListener("click", () => {
-  const url = els.openTab.dataset.href;
-  if (url) window.open(url, "_blank", "noopener");
-});
-els.retry.addEventListener("click", () => load());
-els.signout.addEventListener("click", () => {
-  clearSession();
-  stopApp();
-  configDraft = null;
-  els.app.hidden = true;
-  gate.root.hidden = false;
-  gate.pass.value = "";
-  gateMessage("You have been signed out.", true);
-  gate.user.focus();
-});
-
-// Admin panel wiring
-els.adminBtn.addEventListener("click", openAdminPanel);
-els.closeAdmin.addEventListener("click", closeAdminPanel);
-els.adminModal.addEventListener("click", (ev) => { if (ev.target === els.adminModal) closeAdminPanel(); });
-els.adminUsers.addEventListener("click", (ev) => {
-  const row = ev.target.closest(".admin-user");
-  if (!row) return;
-  selectedAdminUser = row.dataset.username;
-  renderAdminUsers();
-  renderAdminEditor();
-});
-els.adminExport.addEventListener("click", exportUsersJson);
-els.adminReset.addEventListener("click", () => {
-  if (!confirm("Discard all unsaved access changes?")) return;
-  configDraft = JSON.parse(JSON.stringify(CONFIG));
-  if (!selectedAdminUser || !configDraft.users.find((u) => u.username === selectedAdminUser)) {
-    selectedAdminUser = configDraft.users[0]?.username || null;
-  }
-  renderAdminUsers();
-  renderAdminEditor();
-});
-
-/* ==================================================================== */
-/*  LOGIN FLOW                                                          */
-/* ==================================================================== */
-async function attemptLogin(username, password){
-  const user = findUser(username);
-  const ok = await verifyPassword(user, password);
-  return ok ? user : null;
-}
-
-gate.form.addEventListener("submit", async (ev) => {
-  ev.preventDefault();
-  gateMessage("");
-
-  if (!CONFIG) { gateMessage("Configuration not loaded. Reload the page."); return; }
-  if (!cryptoAvailable()) { gateMessage("Web Crypto is unavailable. Serve over HTTPS (or localhost)."); return; }
-
-  const username = gate.user.value.trim();
-  const password = gate.pass.value;
-  if (!username || !password) { gateMessage("Enter both a username and a password."); return; }
-
-  const at = getAttempts();
-  if (at.until && Date.now() < at.until) {
-    gateMessage(`Too many failed attempts. Try again in ${Math.ceil((at.until - Date.now()) / 1000)}s.`);
-    return;
-  }
-
-  setBusy(true);
-  try {
-    const user = await attemptLogin(username, password);
-    if (!user) {
-      const max  = Number(CONFIG.maxAttempts) > 0 ? Number(CONFIG.maxAttempts) : 5;
-      const mins = Number(CONFIG.lockoutMinutes) > 0 ? Number(CONFIG.lockoutMinutes) : 5;
-      const next = { n: at.n + 1, until: 0 };
-      if (next.n >= max) {
-        next.n = 0;
-        next.until = Date.now() + mins * 60_000;
-        gateMessage(`Too many failed attempts. Locked for ${mins} minute${mins === 1 ? "" : "s"}.`);
-      } else {
-        gateMessage(`Incorrect username or password. ${max - next.n} attempt${max - next.n === 1 ? "" : "s"} left.`);
-      }
-      setAttempts(next);
-      gate.pass.value = "";
-      gate.pass.focus();
-      return;
-    }
-
-    setAttempts({ n: 0, until: 0 });
-    const token = await makeToken(user);
-    writeSession(user, token, gate.rem.checked);
-
-    gate.pass.value = "";
-    gate.root.hidden = true;
-    els.app.hidden = false;
-    document.body.style.overflow = "";
-    startApp(user);
-  } catch (err) {
-    console.error("[login]", err);
-    gateMessage("Sign-in failed: " + (err && err.message ? err.message : "unknown error"));
-  } finally {
-    setBusy(false);
-  }
-});
-
-/* ==================================================================== */
-/*  BOOT                                                                */
-/* ==================================================================== */
-(async function boot(){
-  if (!cryptoAvailable()) {
-    gateMessage("Web Crypto is unavailable. Serve this site over HTTPS (GitHub Pages does this).");
-  }
-  try { await loadConfig(); }
-  catch (err) {
-    gateMessage("⚠ " + (err && err.message ? err.message : "Could not load users.json"));
-    return;
-  }
-  if (CONFIG.users.some((u) => typeof u.password === "string" && u.password.length)) {
-    console.warn("[auth] users.json contains plaintext passwords. Use salt+hash instead — the file is publicly readable.");
-  }
-
-  const session = readSession();
-  if (session) {
-    const user = await verifySession(session);
-    if (user) {
-      gate.root.hidden = true;
-      els.app.hidden = false;
-      startApp(user);
-      return;
-    }
-    clearSession();
-  }
-  gate.user.focus();
-})();
-
-})();
 </script>
 </body>
 </html>
