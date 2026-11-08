@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LiveSport — Live TV</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+  :root{
+    --bg:#070a0f; --panel:#0f151f; --panel-2:#151d2a;
+    --line:#1f2a3a; --line-2:#2a3849;
+    --text:#e9eff8; --muted:#8b9bb1;
+    --accent:#22d3ee; --accent-2:#38bdf8; --live:#ff2d55;
+    --radius:16px; --wrap:1400px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(1200px 600px at 85% -10%, #0d2b33 0%, transparent 60%),
+      radial-gradient(900px 500px at 0% 0%, #1a1430 0%, transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Inter, Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  button{font:inherit}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 20px}
+
+  .site-header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(7,10,15,.82);
+    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .bar-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:800;font-size:19px;letter-spacing:-.02em}
+  .brand b{color:var(--accent)}
+  .brand .mark{
+    display:grid;place-items:center;width:32px;height:32px;border-radius:10px;
+    font-size:13px;color:#04121a;background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    box-shadow:0 6px 20px -6px var(--accent);
+  }
+  .nav{display:flex;gap:4px;flex:1}
+  .nav a{padding:8px 14px;border-radius:999px;color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;transition:.15s}
+  .nav a:hover{color:var(--text);background:rgba(255,255,255,.05)}
+  .nav a.active{color:#04121a;background:linear-gradient(135deg,var(--accent),var(--accent-2))}
+  .user-bar{display:flex;align-items:center;gap:10px}
+  .who{font-size:12.5px;color:var(--muted)}
+  .who strong{color:var(--text);font-weight:700}
+  .signout{
+    display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:999px;cursor:pointer;
+    border:1px solid var(--line);background:var(--panel);color:var(--muted);
+    font-size:12.5px;font-weight:700;transition:.15s;white-space:nowrap;
+  }
+  .signout:hover{color:var(--text);border-color:var(--live);background:rgba(255,45,85,.12)}
+  .signout svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+  .hero{padding:44px 0 26px}
+  .hero h1{margin:0 0 8px;font-size:32px;letter-spacing:-.03em}
+  .hero p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.6;max-width:640px}
+  .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:rgba(255,45,85,.14);color:#ff6b87;border:1px solid rgba(255,45,85,.3)}
+  .pill .d{width:6px;height:6px;border-radius:50%;background:var(--live);animation:pulse 1.4s infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.3;transform:scale(.75)}}
+
+  .tv-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));padding-bottom:70px}
+  .tv-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;padding:18px 18px 20px;display:flex;flex-direction:column;gap:8px;transition:.15s}
+  .tv-card:hover{border-color:#2f4257;transform:translateY(-2px);box-shadow:0 22px 45px -24px rgba(0,0,0,.95)}
+  .tv-card .ch{display:inline-flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--muted)}
+  .tv-card h3{margin:0;font-size:15.5px;font-weight:700}
+  .tv-card .show{color:var(--muted);font-size:12.5px;line-height:1.5}
+  .tv-card .foot{margin-top:auto;padding-top:8px}
+  .tv-card .watch-btn{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:9px;padding:8px 12px;font-size:12px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#04121a}
+  .tv-card .watch-btn:hover{filter:brightness(1.12)}
+
+  .notice{margin:20px 0 28px;padding:16px 18px;border-radius:12px;background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.25);color:#b6ecf5;font-size:13px;line-height:1.6}
+  .notice strong{color:var(--accent)}
+  .site-footer{border-top:1px solid var(--line);padding:26px 0 40px;font-size:12px;color:#5f7189;line-height:1.7}
+
+  @media (max-width:720px){
+    .site-header{position:static}
+    .brand{font-size:17px}
+    .hero{padding:28px 0 18px}
+    .hero h1{font-size:24px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div id="app" hidden>
+  <header class="site-header">
+    <div class="wrap bar-top">
+      <a class="brand" href="index.html"><span class="mark" aria-hidden="true">▶</span><span>Live<b>Sport</b></span></a>
+      <nav class="nav">
+        <a href="index.html" data-page="main" hidden>Sports</a>
+        <a href="live-tv.html" data-page="live-tv" class="active" hidden>Live TV</a>
+      </nav>
+      <div class="user-bar">
+        <span class="who" data-auth-who></span>
+        <button class="signout" data-auth-signout title="Sign out">
+          <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+          Sign out
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Live TV</h1>
+      <p>Always-on channels and 24/7 streams. <span class="pill"><span class="d"></span>Live</span></p>
+    </section>
+
+    <div class="notice">
+      <strong>Demo page.</strong> Wire up your Live TV API here by replacing the placeholder cards in the script below. This page is only reachable by accounts whose <code>pages</code> array in <code>users.json</code> includes <code>"live-tv"</code>.
+    </div>
+
+    <section class="tv-grid" id="tvGrid" aria-live="polite"></section>
+  </main>
+
+  <footer class="wrap site-footer">
+    <div>Live TV streams are provided by a third-party service. This site only indexes publicly available embeds and hosts no video content.</div>
+  </footer>
+</div>
+
+<script src="auth.js"></script>
+<script>
+(async () => {
+  const user = await LiveSportAuth.require("live-tv");
+
+  document.getElementById("app").hidden = false;
+  LiveSportAuth.setupHeader(user);
+
+  // ----- Replace this block with your Live TV API integration -----
+  const demoChannels = [
+    { name: "Channel One",   show: "Around the World in 90 Minutes", live: true  },
+    { name: "Channel Two",   show: "Studio Analysis",                live: true  },
+    { name: "Channel Three", show: "Replay: Match of the Day",       live: false },
+    { name: "Channel Four",  show: "Highlights Marathon",            live: false },
+    { name: "Channel Five",  show: "Talk Sport Live",                live: true  },
+    { name: "Channel Six",   show: "Comedy Sports Hour",             live: false }
+  ];
+
+  const grid = document.getElementById("tvGrid");
+  grid.innerHTML = demoChannels.map((c) => `
+    <article class="tv-card">
+      <div class="ch">
+        <span>${escapeHtml(c.name)}</span>
+        ${c.live ? '<span class="pill"><span class="d"></span>Live</span>' : '<span>Replay</span>'}
+      </div>
+      <h3>${escapeHtml(c.show)}</h3>
+      <p class="show">${c.live ? "Now playing" : "Recently aired"}</p>
+      <div class="foot">
+        <button class="watch-btn" type="button">▶ Watch</button>
+      </div>
+    </article>
+  `).join("");
+
+  function escapeHtml(s) {
+    return String(s ?? "").replace(/[&<>"']/g, (c) =>
+      ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  }
+  // -----------------------------------------------------------------
+})();
+</script>
+</body>
+</html>
